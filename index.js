@@ -109,7 +109,7 @@ app.use((err, req, res, next) => {
 // })
 
 app.get("/", (req, res) => {
-  res.send("Hi, I am groot");
+  res.redirect("/listings");
 });
 
 app.all("*", (req, res, next) => {
