@@ -26,6 +26,10 @@ module.exports.isOwner = async (req, res, next) => {
 
   let listing = await Listing.findById(id);
 
+  // console.log(listing.owner._id);
+
+  // console.log(res.locals.currUser);
+
   if (!listing.owner._id.equals(res.locals.currUser._id)) {
     req.flash("error", "You don't have permission to edit");
 

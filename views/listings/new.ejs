@@ -1,61 +1,89 @@
-
 <% layout("/layouts/boilerplate") %>
 <body>
-    <div class="row">
-        <div class="col-8 offset-2">
-            <br/><br/>
-            <h2>Create new allListings</h2>
-            <form action="/listings" method="POST" novalidate class="needs-validation">
-                <div>
-                    <label for="title" class="form-label">Title</label>
-                 <input type="text" name="title" placeholder="enter title" class="form-control" required>
-                 <div class="invalid-feedback">Please enter the Title</div>
-                
-                </div>
-                <br/>
-                <div>
-                    <label for="description" class="form-label">Description</label>
-                    <textarea name="description" placeholder="enter description" class="form-control" required></textarea>
-                    <div class="invalid-feedback">Please enter the Description</div>
-                </div>
-          
-                <br/>
-                <div>
-                    <label for="image" class="form-label">Image Link</label>
-                    <input type="text" name="image" placeholder="enter image" class="form-control">
-                    <div class="invalid-feedback">Please enter the Image</div>
-                </div>
-              
-                <br/>
-                <div class="row">
-                    <div class="col-4">
-                        <label for="price" class="form-label">Price</label>
-                        <input type="number" name="price" placeholder="enter price" class="form-control" required>
-                        <div class="invalid-feedback">Please enter the Price</div>
-                    </div>
-                  
-                  
-                    <div class="col-8">
-                        <label for="country" class="form-label">Country</label>
-                        <input type="text" name="country" placeholder="enter country" class="form-control" required>
-                        <div class="invalid-feedback">Please enter the Country</div>
-                    </div>
-                </div>
-           
-          
-                <br/>
-                <div>
-                    <label for="location" class="form-label">Location</label>
-                    <input type="text" name="location" placeholder="enter location" class="form-control" required>
-                    <div class="invalid-feedback">Please enter the Location</div>
-                </div>
-        
-                <br/>
-                <button class="btn btn-dark add-btn">Add</button>
-                <br/><br/>
-            </form>
+  <div class="row">
+    <div class="col-8 offset-2">
+      <br /><br />
+      <h2>Create new allListings</h2>
+      <form
+        action="/listings"
+        method="POST"
+        novalidate
+        class="needs-validation"
+        enctype="multipart/form-data"
+      >
+        <div>
+          <label for="title" class="form-label">Title</label>
+          <input
+            type="text"
+            name="title"
+            placeholder="enter title"
+            class="form-control"
+            required
+          />
+          <div class="invalid-feedback">Please enter the Title</div>
         </div>
-      
-    </div>
+        <br />
+        <div>
+          <label for="description" class="form-label">Description</label>
+          <textarea
+            name="description"
+            placeholder="enter description"
+            class="form-control"
+            required
+          ></textarea>
+          <div class="invalid-feedback">Please enter the Description</div>
+        </div>
 
+        <br />
+        <div>
+          <label for="image" class="form-label">Upload Listing Image</label>
+          <input type="file" name="image" class="form-control" />
+          <div class="invalid-feedback">Please enter the Image</div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-4">
+            <label for="price" class="form-label">Price</label>
+            <input
+              type="number"
+              name="price"
+              placeholder="enter price"
+              class="form-control"
+              required
+            />
+            <div class="invalid-feedback">Please enter the Price</div>
+          </div>
+
+          <div class="col-8">
+            <label for="country" class="form-label">Country</label>
+            <input
+              type="text"
+              name="country"
+              placeholder="enter country"
+              class="form-control"
+              required
+            />
+            <div class="invalid-feedback">Please enter the Country</div>
+          </div>
+        </div>
+
+        <br />
+        <div>
+          <label for="location" class="form-label">Location</label>
+          <input
+            type="text"
+            name="location"
+            placeholder="enter location"
+            class="form-control"
+            required
+          />
+          <div class="invalid-feedback">Please enter the Location</div>
+        </div>
+
+        <br />
+        <button class="btn btn-dark add-btn">Add</button>
+        <br /><br />
+      </form>
+    </div>
+  </div>
 </body>

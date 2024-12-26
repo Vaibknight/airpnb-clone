@@ -7,7 +7,7 @@ module.exports.index = async (req, res) => {
 };
 
 module.exports.newForm = (req, res) => {
-  console.log(req.user);
+  // console.log(req.user);
 
   res.render("listings/new");
 };
@@ -26,18 +26,25 @@ module.exports.showList = async (req, res, next) => {
     res.redirect("/listings");
   }
 
-  console.log(listing);
+  // console.log(listing);
 
   // Render the template with the found listing
   res.render("listings/show", { listing });
 };
 
 module.exports.createListing = async (req, res, next) => {
+  let url = req.file.path;
+  let filename = req.file.filename;
+
+  // console.log(url, "..", filename);
+
   const newListing = new Listing(req.body);
 
   //   console.log(newListing);
 
   newListing.owner = req.user._id;
+
+  newListing.image = { url, filename };
 
   await newListing.save();
 
@@ -55,20 +62,34 @@ module.exports.renderEditForm = async (req, res) => {
     res.redirect("/listings");
   }
 
+  let originalImage = listing.image.url;
+
+  originalImage = originalImage.replace("/upload", "/upload/h_300,w_250");
+
   req.flash("success", "Listing Updated!");
-  res.render("listings/edit", { listing });
+  res.render("listings/edit", { listing, originalImage });
 };
 
 module.exports.updateListing = async (req, res) => {
   let { id } = req.params;
 
-  await Listing.findByIdAndUpdate(id, { ...req.body });
+  let listing = await Listing.findByIdAndUpdate(id, { ...req.body });
+
+  if (typeof req.file !== "undefined") {
+    let url = req.file.path;
+    let filename = req.file.filename;
+
+    listing.image = { url, filename };
+
+    await listing.save();
+  }
+
   res.redirect(`/listings/${id}`);
 };
 
 module.exports.destroyList = async (req, res) => {
   let { id } = req.params;
-  console.log(id);
+  // console.log(id);
   await Listing.findByIdAndDelete(id);
   req.flash("success", "Listing deleted!");
   res.redirect("/listings");

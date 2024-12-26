@@ -8,7 +8,7 @@
 
   <div class="card col-6 offset-2">
     <img
-      src="<%= listing.image %>>"
+      src="<%= listing.image.url %>"
       class="card-img-top show-img"
       alt="listing_image"
     />
@@ -52,7 +52,7 @@
       method="POST"
       novalidate
     >
-      <div class="my-3">
+      <!-- <div class="my-3">
         <label for="rating" class="form-label">Rating</label>
         <input
           type="range"
@@ -62,7 +62,26 @@
           name="review[rating]"
           class="form-range"
         />
-      </div>
+      </div> -->
+
+   <div class="my-3">
+    <label for="rating" class="form-label">Rating</label>
+      <fieldset class="starability-grow">
+
+
+        <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" checked aria-label="No rating." />
+        <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+        <label for="first-rate1" title="Terrible">1 star</label>
+        <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+        <label for="first-rate2" title="Not good">2 stars</label>
+        <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+        <label for="first-rate3" title="Average">3 stars</label>
+        <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+        <label for="first-rate4" title="Very good">4 stars</label>
+        <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+        <label for="first-rate5" title="Amazing">5 stars</label>
+      </fieldset>
+    </div>
       <div class="my-3">
         <label for="comment" class="form-label">Comments</label>
         <textarea
@@ -83,6 +102,8 @@
     <% }%>
 
     <hr />
+
+    <% if(listing.reviews.length > 0) { %>
     <h4>All Reviews</h4>
 
     <div class="row">
@@ -90,23 +111,14 @@
       <div class="listing-card col-md-6 ms-3 mb-3" style="width: 18rem">
         <div class="card-body">
           <h5 class="card-title">@<%= review.author.username %></h5>
+          <p class="starability-result" data-rating="<%= review.rating %>">
+            Rated: 3 stars
+          </p>
           <p class="card-text"><%= review.comment %></p>
           <div class="d-flex" style="justify-content: space-between">
-            <p class="card-text">
-              <%= review.rating %>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-star-fill"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"
-                />
-              </svg>
-            </p>
+            
+
+        
             <form
               method="POST"
               action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
@@ -131,6 +143,32 @@
       </div>
       <% } %>
     </div>
+ <% } %>
+     
+    
   </div>
 
+  <div class="col-8 offset-2 my-3">
+    <h3>Where you'll be</h3>
+    <div id="map"></div>
+</div>
+
+<link
+href="https://api.mapbox.com/mapbox-gl-js/v3.9.1/mapbox-gl.css"
+rel="stylesheet"
+/>
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.9.1/mapbox-gl.js"></script>
+<script>
+
+  let maptoken = "<%= process.env.MAP_TOKEN %>";
+
+  console.log(maptoken);
+  
+	mapboxgl.accessToken = maptoken;
+    const map = new mapboxgl.Map({
+        container: 'map', // container ID
+        center: [75.3412, 31.1471], // starting position [lng, lat]. Note that lat must be set between -90 and 90
+        zoom: 9 // starting zoom
+    });
+</script>
 </body>

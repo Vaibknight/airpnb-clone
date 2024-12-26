@@ -10,6 +10,10 @@ const { isLoggedin, isOwner } = require("../middleware");
 
 const ListingController = require("../controllers/listing");
 
+const multer = require("multer");
+const { storage } = require("../cloudConfig");
+const upload = multer({ storage });
+
 const validateListing = (req, res, next) => {
   let { error } = listingSchema.validate(req.body);
   if (error) {
@@ -20,25 +24,24 @@ const validateListing = (req, res, next) => {
   }
 };
 
-// Index Route
-router.get("/", ListingController.index);
+router
+  .route("/")
+  .get(ListingController.index)
+  .post(upload.single("image"), ListingController.createListing);
 
-// New Route
 router.get("/new", isLoggedin, ListingController.newForm);
 
-// Show Route
-router.get("/:id", wrapAsync(ListingController.showList));
-
-// Create Route
-router.post("/", ListingController.createListing);
-
-// Update Route
-router.put("/:id", isLoggedin, isOwner, ListingController.updateListing);
-
-// Edit Route
+router
+  .route("/:id")
+  .get(wrapAsync(ListingController.showList))
+  .put(
+    isLoggedin,
+    isOwner,
+    upload.single("image"),
+    ListingController.updateListing
+  )
+  .delete(isLoggedin, isOwner, ListingController.destroyList);
 
 router.get("/:id/edit", isOwner, ListingController.renderEditForm);
-
-router.delete("/:id", isLoggedin, isOwner, ListingController.destroyList);
 
 module.exports = router;
