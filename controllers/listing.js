@@ -6,7 +6,10 @@ const mapToken = process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({ accessToken: mapToken });
 
 module.exports.index = async (req, res) => {
-  const { search } = req.query;
+  const { search, category } = req.query;
+
+  console.log(category);
+
   const query = {
     $or: [
       { title: new RegExp(search, "i") },
@@ -16,9 +19,14 @@ module.exports.index = async (req, res) => {
     ],
   };
 
+  // Add category filtering if the category parameter exists
+  if (category) {
+    query.category = category;
+  }
+
   const allListings = await Listing.find(query);
 
-  console.log(allListings);
+  // console.log(allListings);
 
   res.render("listings/index", { allListings }); // No .ejs extension needed
 };
@@ -64,7 +72,11 @@ module.exports.createListing = async (req, res, next) => {
 
   const newListing = new Listing(req.body);
 
-  //   console.log(newListing);
+  // console.log(newListing);
+
+  // console.log(req.user._id);
+
+  // res.send("done!");
 
   newListing.owner = req.user._id;
 

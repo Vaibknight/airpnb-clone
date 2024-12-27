@@ -70,6 +70,23 @@
           </div>
         </div>
         <br />
+
+        <% if (listing && listing.category) { %>
+          <div class="col-8">
+            <label for="category" class="form-label">Categories</label>
+            <select id="categoryDropdown" class="form-control" name="category">
+              <option value="Mountains" <%= listing.category === 'Mountains' ? 'selected' : '' %>>Mountains</option>
+              <option value="Castles" <%= listing.category === 'Castles' ? 'selected' : '' %>>Castles</option>
+              <option value="Amazing Pools" <%= listing.category === 'Amazing Pools' ? 'selected' : '' %>>Amazing Pools</option>
+              <option value="Camping" <%= listing.category === 'Camping' ? 'selected' : '' %>>Camping</option>
+              <option value="Farms" <%= listing.category === 'Farms' ? 'selected' : '' %>>Farms</option>
+              <option value="Arctic" <%= listing.category === 'Arctic' ? 'selected' : '' %>>Arctic</option>
+            </select>
+            <div class="invalid-feedback">Please Select the Category</div>
+          </div>
+        <% } %>
+        
+        <br />
         <div>
           <label for="location" class="form-label">Location</label>
           <input

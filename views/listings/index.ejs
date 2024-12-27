@@ -43,39 +43,39 @@
 
   <div style="display: flex; justify-content: space-between">
     <div id="filters">
-      <div class="filter">
+      <div class="filter" onclick="applyFilter('Trending')">
         <i class="fa-solid fa-fire"></i>
         <p>Trending</p>
       </div>
-      <div class="filter">
+      <div class="filter" onclick="applyFilter('Rooms')">
         <i class="fa-solid fa-bed"></i>
         <p>Rooms</p>
       </div>
-      <div class="filter">
+      <div class="filter" onclick="applyFilter('iconic Cities')">
         <i class="fa-solid fa-mountain-city"></i>
         <p>iconic Cities</p>
       </div>
-      <div class="filter">
+      <div class="filter" onclick="applyFilter('Mountains')">
         <i class="fa-solid fa-mountain"></i>
         <p>Mountains</p>
       </div>
-      <div class="filter">
+      <div class="filter" onclick="applyFilter('Castles')">
         <i class="fa-brands fa-fort-awesome"></i>
         <p>Castles</p>
       </div>
-      <div class="filter">
+      <div class="filter" onclick="applyFilter('Amazing Pools')">
         <i class="fa-solid fa-person-swimming"></i>
         <p>Amazing Pools</p>
       </div>
-      <div class="filter">
+      <div class="filter" onclick="applyFilter('Camping')">
         <i class="fa-solid fa-campground"></i>
         <p>Camping</p>
       </div>
-      <div class="filter">
+      <div class="filter" onclick="applyFilter('Farms')">
         <i class="fa-solid fa-cow"></i>
         <p>Farms</p>
       </div>
-      <div class="filter">
+      <div class="filter" onclick="applyFilter('Arctic')">
         <i class="fa-regular fa-snowflake"></i>
         <p>Arctic</p>
       </div>
@@ -124,6 +124,13 @@
   </div>
 
   <script>
+    function applyFilter(category) {
+      // Redirect to the filtered listings page
+      window.location.href = `/listings?category=${encodeURIComponent(
+        category
+      )}`;
+    }
+
     let priceSwitch = document.getElementById("flexSwitchCheckDefault");
 
     priceSwitch.addEventListener("click", () => {
