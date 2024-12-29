@@ -7,9 +7,7 @@ const app = express();
 
 const mongoose = require("mongoose");
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
-
-// const MONGO_URL = "mongodb+srv://vaibhav:vaibhav@cluster0.azhpv.mongodb.net/";
+const db_URL = process.env.ATLASDB;
 
 const path = require("path");
 const methodOverride = require("method-override");
@@ -24,6 +22,7 @@ const Reviews = require("./routes/review");
 const userRouter = require("./routes/user");
 
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 
 const flash = require("connect-flash");
 
@@ -33,8 +32,22 @@ const LocalStrategy = require("passport-local");
 
 const User = require("./models/user");
 
+const store = MongoStore.create({
+  mongoUrl: db_URL,
+  crypto: {
+    secret: process.env.SECRET,
+  },
+
+  touchAfter: 24 * 3600,
+});
+
+store.on("error", () => {
+  console.log("ERROR in MONGO SESSION STORE", err);
+});
+
 const sessionOptions = {
-  secret: "secret",
+  store: store,
+  secret: process.env.SECRET,
   resave: false,
   saveUnintialized: true,
   cookie: {
@@ -53,7 +66,7 @@ main()
   });
 
 async function main() {
-  await mongoose.connect(MONGO_URL);
+  await mongoose.connect(db_URL);
 }
 
 app.set("view engine", "ejs");
@@ -124,6 +137,6 @@ app.use((err, req, res, next) => {
   // res.status(statusCode).send(message);
 });
 
-app.listen(8080, () => {
-  console.log("Server is listening to port 8080");
+app.listen(3000, () => {
+  console.log("Server is listening to port 3000");
 });
